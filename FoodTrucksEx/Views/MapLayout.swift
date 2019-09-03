@@ -13,7 +13,9 @@ import MapKit
 struct MapLayout: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    @ObservedObject var foodTruckVM: FoodTruckListViewModel
+    //@ObservedObject var foodTruckVM: FoodTruckListViewModel
+    var foodTruckVM: FoodTruckListViewModel
+    var filteredFoodTruck: FoodTruckViewModel!
     @Binding var isPresented: Bool
 
     @State var selectedFoodTruck: SelectFoodTruck?
@@ -21,7 +23,7 @@ struct MapLayout: View {
 
     var body: some View {
             VStack {
-                MapView(foodTruckVM: self.foodTruckVM, selectedFoodTruck: $selectedFoodTruck, userLocation: $userLocation)
+                MapView(foodTruckVM: self.foodTruckVM, filteredFoodTruck: self.filteredFoodTruck, selectedFoodTruck: $selectedFoodTruck, userLocation: $userLocation)
                     .edgesIgnoringSafeArea(.top)
                     .padding()
                 if selectedFoodTruck != nil {

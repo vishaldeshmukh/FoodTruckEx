@@ -35,7 +35,7 @@ struct MapView: UIViewRepresentable {
             sel.descr = pin.foodTruck?.descr ?? ""
             sel.location = pin.foodTruck?.location ?? ""
             sel.operationHours = pin.foodTruck?.operationHours ?? ""
-            sel.coordinate = (pin.foodTruck?.coordinate ?? nil)!
+            sel.coordinate = pin.coordinate
             //CLLocationCoordinate2D(latitude: Double(pin.foodTruck?.latitude ?? "0")!,longitude: Double(pin.foodTruck?.longitude ?? "0")!)
 
             self.selectedFoodTruck = sel
@@ -50,6 +50,7 @@ struct MapView: UIViewRepresentable {
      }
     
     var foodTruckVM: FoodTruckListViewModel!
+    var filteredFoodTruck: FoodTruckViewModel!
     @Binding var selectedFoodTruck: SelectFoodTruck?
     @Binding var userLocation: CLLocationCoordinate2D?
 
@@ -60,6 +61,7 @@ struct MapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let view = MKMapView(frame: .zero)
         view.delegate = context.coordinator
+        
         return view
     }
     
@@ -106,10 +108,23 @@ struct MapView: UIViewRepresentable {
 
         var pins: [PinFoodTrucksLocation] = []
 
-        for foodTruck in self.foodTruckVM.foodTrucks {
-            pins.append(PinFoodTrucksLocation(foodTruck: foodTruck, firsLocation: true))
-            if foodTruck.hasSecondLocation {
-                pins.append(PinFoodTrucksLocation(foodTruck: foodTruck, firsLocation: false))
+        if filteredFoodTruck != nil {
+            let location = self.filteredFoodTruck.coordinates[0]
+            pins.append(PinFoodTrucksLocation(foodTruck: filteredFoodTruck, coordinate: location))
+            
+//            let sel = SelectFoodTruck()
+//            sel.applicant = filteredFoodTruck?.applicant ?? ""
+//            sel.descr = filteredFoodTruck?.descr ?? ""
+//            sel.location = filteredFoodTruck?.location ?? ""
+//            sel.operationHours = filteredFoodTruck?.operationHours ?? ""
+//            sel.coordinate = filteredFoodTruck.coordinates[0]
+//            self.selectedFoodTruck = sel
+
+        } else {
+            for foodTruck in self.foodTruckVM.foodTrucks {
+                for location in foodTruck.coordinates {
+                    pins.append(PinFoodTrucksLocation(foodTruck: foodTruck, coordinate: location))
+                }
             }
         }
         mapView.addAnnotations(pins)

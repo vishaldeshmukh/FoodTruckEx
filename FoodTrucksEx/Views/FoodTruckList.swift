@@ -36,23 +36,33 @@ struct FoodTruckList: View {
                         .padding(.leading)
                     TextField("Search", text: $searchQuery)
                         .padding()
-                    //.keyboardType(.alphabet)
-                    
+                    Spacer()
+                    Button(action: {
+                        self.searchQuery = ""
+                    }) {
+                        Image(systemName: "multiply.circle.fill")
+                            .foregroundColor(.secondary)
+                    }.padding()
                 }
                 .border(Color.secondary, width: 1)
                 .padding()
-//                List{
-//                    //ForEach(foodTruckVM.foodTrucks) { foodTruck in
-//                        // Not sure if the `if workoutFilter.isOn` is allowed, so I've instead used it to only iterate an empty array
-//                        ForEach(self.foodTruckVM.foodTrucks.filter { foodTruckFilter in
-//                            foodTruckFilter.applicant.contains(self.searchQuery)
-//                        }) { foodTruck in
-//                            FoodTruckRow(foodTruck: foodTruck)
-//                        }
-//                    //}
-//                }
-                List(foodTruckVM.foodTrucks) { foodTruck in
-                    FoodTruckRow(foodTruck: foodTruck)
+                if self.searchQuery.isEmpty {
+                    List(foodTruckVM.foodTrucks) { foodTruck in
+                        NavigationLink(destination: MapLayout(foodTruckVM: self.foodTruckVM,filteredFoodTruck: foodTruck, isPresented: self.$showingMapView)) {
+                            FoodTruckRow(foodTruck: foodTruck)
+                        }
+                    }
+                } else {
+                    List{
+                        ForEach(self.foodTruckVM.foodTrucks.filter { foodTruckFilter in
+                            foodTruckFilter.applicant.contains(self.searchQuery) || foodTruckFilter.descr.contains(self.searchQuery)
+                        }) { foodTruck in
+                            
+                            NavigationLink(destination: MapLayout(foodTruckVM: self.foodTruckVM, filteredFoodTruck:foodTruck,  isPresented: self.$showingMapView)) {
+                                FoodTruckRow(foodTruck: foodTruck)
+                            }
+                        }
+                    }
                 }
            }
             .navigationBarTitle("Food Trucks", displayMode: .inline)
@@ -61,19 +71,6 @@ struct FoodTruckList: View {
                 NavigationLink(destination: MapLayout(foodTruckVM: self.foodTruckVM, isPresented: self.$showingMapView)) {
                     Text("Map")
                 })
-//            Button(action: {
-//                //self.showingMapView = true
-//                self.showingMapView = true
-//            }) {
-//                Text("Map")
-//            }
-//            .sheet(isPresented: $showingMapView){
-//                //ViewControllerWrapper()
-//                //ButtonContentView()
-//                MapLayout(foodTruckVM: self.foodTruckVM, isPresented: self.$showingMapView)
-//
-//                }
-//            )
         }
         
         

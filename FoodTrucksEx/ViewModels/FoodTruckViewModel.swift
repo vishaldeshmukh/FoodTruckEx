@@ -35,23 +35,29 @@ class FoodTruckViewModel: Identifiable {
         return foodTruck?.optionaltext ?? ""
     }
     
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: Double(foodTruck?.latitude ?? "0")!,longitude: Double(foodTruck?.longitude ?? "0")!)
+    var coordinates: [CLLocationCoordinate2D] {
+        
+        var latlongs: [CLLocationCoordinate2D] = []
+        latlongs.append(CLLocationCoordinate2D(latitude: Double(foodTruck?.latitude ?? "0")!,longitude: Double(foodTruck?.longitude ?? "0")!))
+        if hasSecondLocation {
+            latlongs.append(CLLocationCoordinate2D(latitude: Double(foodTruck?.location_2.latitude ?? "0")!,longitude: Double(foodTruck?.location_2.longitude ?? "0")!))
+        }
+        return latlongs
     }
     
-    var latitude: String {
-        return foodTruck?.latitude ?? ""
-    }
-    var longitude: String {
-        return foodTruck?.longitude ?? ""
-    }
-    
-    var latitude2: String {
-        return foodTruck?.location_2.latitude ?? ""
-    }
-    var longitude2: String {
-        return foodTruck?.location_2.longitude ?? ""
-    }
+//    var latitude: String {
+//        return foodTruck?.latitude ?? ""
+//    }
+//    var longitude: String {
+//        return foodTruck?.longitude ?? ""
+//    }
+//
+//    var latitude2: String {
+//        return foodTruck?.location_2.latitude ?? ""
+//    }
+//    var longitude2: String {
+//        return foodTruck?.location_2.longitude ?? ""
+//    }
     
     var operationHours: String {
         return "\(foodTruck?.starttime ?? "") - \(foodTruck?.endtime ?? "")"

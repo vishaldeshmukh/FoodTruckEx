@@ -24,17 +24,12 @@ class PinFoodTrucksLocation : NSObject , MKAnnotation {
     }
     
     let color: UIColor = UIColor.blue
-    init(foodTruck: FoodTruckViewModel, firsLocation: Bool) {
+    init(foodTruck: FoodTruckViewModel, coordinate: CLLocationCoordinate2D) {
         
         self.title = foodTruck.applicant
-        if firsLocation {
-            self.locationName = foodTruck.location
-            self.coordinate = CLLocationCoordinate2D(latitude: Double(foodTruck.latitude)!,longitude: Double(foodTruck.longitude)!)
-        } else {
-            self.locationName = "\(foodTruck.location ) - second location"
-            //self.coordinate = CLLocationCoordinate2D(latitude: Double(foodTruck.latitude2)!,longitude: Double(foodTruck.longitude2)!)
-            self.coordinate = CLLocationCoordinate2D(latitude: 37.787359, longitude: -122.408227)
-        }
+        //if firsLocation {
+        self.locationName = foodTruck.location
+        self.coordinate = coordinate
         self.foodTruck = foodTruck
 
         super.init()
