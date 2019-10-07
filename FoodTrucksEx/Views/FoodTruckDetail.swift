@@ -45,12 +45,15 @@ struct FoodTruckDetail: View {
                     .minimumScaleFactor(0.5)
             }.padding()
             VStack(alignment: .trailing) {
-                Image("car")
-                    .resizable()
-                    .frame(width: 32.0, height: 32.0)
-                    .padding()
-                    .onTapGesture {
-                        self.drawDrivingDirection(destinationAddress: self.applicant, startingLocation: self.userLocation!, destinationLocation: self.coordinate)
+                
+                if self.userLocation != nil {
+                    Image("car")
+                        .resizable()
+                        .frame(width: 32.0, height: 32.0)
+                        .padding()
+                        .onTapGesture {
+                            self.drawDrivingDirection(destinationAddress: self.applicant, startingLocation: self.userLocation!, destinationLocation: self.coordinate)
+                    }
                 }
                 Text(operationHours)
                     .padding()

@@ -23,10 +23,11 @@ final class SelectFoodTruck: ObservableObject {
 struct FoodTruckList: View {
     
     @ObservedObject var foodTruckVM: FoodTruckListViewModel = FoodTruckListViewModel()
-    //@State var foodTruckVM: FoodTruckListViewModel = FoodTruckListViewModel()
+    @State var locationManager: LocationManager
 
     @State private var showingMapView = false
     @State var searchQuery: String = ""
+    
     var body: some View {
         
         NavigationView {
@@ -72,14 +73,11 @@ struct FoodTruckList: View {
                     Text("Map")
                 })
         }
-        
-        
-    }
-    
+    }    
 }
 
 struct FoodTruckList_Previews: PreviewProvider {
     static var previews: some View {
-        FoodTruckList()
+        FoodTruckList(locationManager:LocationManager())
     }
 }

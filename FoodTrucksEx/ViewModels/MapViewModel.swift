@@ -96,6 +96,22 @@ class MapModelView:NSObject, MKMapViewDelegate {
             self.selectedFoodTruck = currAnn
         }
     }
+    private func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+          let reuseIdentifier = "pin"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+
+          if annotationView == nil {
+              annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+              annotationView?.canShowCallout = true
+          } else {
+              annotationView?.annotation = annotation
+          }
+
+          //let customPointAnnotation = annotation as! PinFoodTrucksLocation
+          annotationView?.image = UIImage(named: "geo_pin")
+
+          return annotationView
+      }
     func drawDrivingDirection(destinationAddress: String, destinationLocation : CLLocationCoordinate2D ) {
         
         let sourceLocation = CLLocationCoordinate2D(latitude: self.lat,longitude: self.long)

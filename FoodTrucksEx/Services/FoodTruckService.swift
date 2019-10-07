@@ -51,7 +51,7 @@ class FoodTruckService {
         
     }
     func fetchFoodTrucksLocal(completion: @escaping([FoodTruck]?) -> Void) {
-        guard let path = Bundle.main.path(forResource: "foodtrucks", ofType: "json") else { return }
+        guard let path = Bundle.main.path(forResource: "foodtrucksData", ofType: "json") else { return }
         let url = URL(fileURLWithPath: path)
         do {
             let data = try Data(contentsOf: url)

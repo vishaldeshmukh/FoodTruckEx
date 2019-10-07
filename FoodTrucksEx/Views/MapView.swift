@@ -76,7 +76,7 @@ struct MapView: UIViewRepresentable {
 
         if CLLocationManager.locationServicesEnabled() {
             
-            if self.userLocation == nil {
+            //if self.userLocation == nil {
                 locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
                 locationManager.startUpdatingLocation()
                 
@@ -94,7 +94,7 @@ struct MapView: UIViewRepresentable {
                         
                     }
                 })
-            }
+            //}
         } else {
             //Default SF lat and long
             let coordinate = CLLocationCoordinate2D(
